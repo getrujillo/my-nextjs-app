@@ -53,11 +53,6 @@ jobs:
     steps:
       - name: Trigger Lambda function
         run: |
-          curl -X POST ${{ secrets.LAMBDA_URL }} \
-            -H "Content-Type: application/json" \
-            -d '{
-              "status": "${{ needs.deploy.result }}",
-              "branch": "${{ github.ref_name }}",
-              "commit": "${{ github.sha }}",
-              "timestamp": "${{ github.event.head_commit.timestamp }}"
-            }'
+          curl -X POST "${{ secrets.LAMBDA_URL }}" \
+            -H 'Content-Type: application/json' \
+            -d '{"status":"${{ needs.deploy.result }}","branch":"${{ github.ref_name }}","commit":"${{ github.sha }}","timestamp":"${{ github.event.head_commit.timestamp }}"}'
